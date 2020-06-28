@@ -20,6 +20,7 @@ import java.util.List;
 public class NoteListActivity extends AppCompatActivity {
 
     private ArrayAdapter<NoteInfo> mAdapterNotes;
+    private NoteRecyclerAdapter mNoteRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class NoteListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        mAdapterNotes.notifyDataSetChanged();
+        mNoteRecyclerAdapter.notifyDataSetChanged();
     }
 
     private void initializeDisplayContent() {
@@ -84,6 +86,12 @@ public class NoteListActivity extends AppCompatActivity {
         final LinearLayoutManager noteLayoutManager = new LinearLayoutManager(this);
         // associate LinearLayoutManager with the RecyclerView
         recyclerNotes.setLayoutManager(noteLayoutManager);
+        // get list of notes we want to display inside our Recyclerview
+        List<NoteInfo> notes = DataManager.getInstance().getNotes();
+        // create an instance of NoteRecycleAdapter class
+        mNoteRecyclerAdapter = new NoteRecyclerAdapter(this, notes);
+        // associate this adapter with our recycler view
+        recyclerNotes.setAdapter(mNoteRecyclerAdapter);
 
     }
 
