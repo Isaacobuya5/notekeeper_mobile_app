@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+//import android.widget.AdapterView;
+//import android.widget.ArrayAdapter;
+//import android.widget.ListView;
 
 import java.util.List;
 
 public class NoteListActivity extends AppCompatActivity {
 
-    private ArrayAdapter<NoteInfo> mAdapterNotes;
+//    private ArrayAdapter<NoteInfo> mAdapterNotes;
     private NoteRecyclerAdapter mNoteRecyclerAdapter;
 
     @Override

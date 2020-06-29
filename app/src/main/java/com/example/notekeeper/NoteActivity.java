@@ -63,6 +63,18 @@ public class NoteActivity extends AppCompatActivity {
             displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //This method is initially called before menu is displayed
+        // get a reference to the menu item that we are interested in
+        MenuItem menuItem = menu.findItem(R.id.action_next);
+        // get index of the last note
+        int lastNoteIndex = DataManager.getInstance().getNotes().size() - 1;
+        // enable it for as long as we are not in the last note
+        menuItem.setEnabled(mNotePosition < lastNoteIndex);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     private void saveOriginalNoteValues() {
         if(mIsNewNote)
             return;
@@ -152,9 +164,26 @@ public class NoteActivity extends AppCompatActivity {
         } else if (id == R.id.action_cancel) {
             mIsCancelling = true;
             finish();
+        } else if (id == R.id.action_next) {
+            // we want to display the next note
+            moveNext();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void moveNext() {
+
+        // to move to the next note -first increment the notes current position
+        ++mNotePosition;
+        // get note at that particular position
+        mNote = DataManager.getInstance().getNotes().get(mNotePosition);
+        // save original note values
+        saveOriginalNoteValues();
+        // display that particular note
+        displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
+        // call this method to ensure onPrepareMenuOptions is called again
+        invalidateOptionsMenu();
     }
 
     private void sendEmail() {
